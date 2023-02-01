@@ -33,7 +33,7 @@
                 <div class="divider-custom-line"></div>
                 <h3>
                     <a class="text-center text-uppercase text-secondary nav-link py-3 px-0 px-lg-3 rounded"
-                       href="{{ path('app_candidacy_new') }}">Ajouter une candidature</a>
+                       href="{{ path('app_candidacy_new',  {'id': app.user.id}) }}">Ajouter une candidature</a>
                 </h3>
                 <div class="divider-custom-line"></div>
             </div>
@@ -49,7 +49,7 @@
                                  style="padding: 10px">
                                 Entreprise : {{ candidacy.nameEntreprise }}<br>
                                 Commentaires : {{ candidacy.content }}<br>
-                                <div style="text-align: end; font-style: oblique">Créé le {{ candidacy.createdAt|date ('d-m-Y') }}</div>
+                                <div style="text-align: end; font-style: oblique">Créé le {{ candidacy.createdAt|date("d-m-Y") }}</div>
                                 <div class="divider-custom">
                                     <div class="divider-custom-line"></div>
                                     <div class="divider-custom-icon"><i class="fas fa-archive"></i></div>

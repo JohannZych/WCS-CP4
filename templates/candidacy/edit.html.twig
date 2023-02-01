@@ -13,7 +13,9 @@
                     <!-- Icon Divider-->
                     <div class="divider-custom">
                         <div class="divider-custom-line"></div>
-                        <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                        <div class="divider-custom-icon"><a
+                                    href="{{ path ('app_candidacy_delete',  {'id': candidacy.id}) }}"><i
+                                        class="fas fa-trash text-danger fs-1"></i></a></div>
                         <div class="divider-custom-line"></div>
                     </div>
                     <div class="form-control bg-secondary text-white">

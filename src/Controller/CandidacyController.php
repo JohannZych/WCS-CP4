@@ -6,7 +6,6 @@ use App\Entity\Candidacy;
 use App\Entity\User;
 use App\Form\CandidacyType;
 use App\Repository\CandidacyRepository;
-use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,22 +23,28 @@ class CandidacyController extends AbstractController
     }
 
     #[Route('/new', name: 'app_candidacy_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, CandidacyRepository $candidacyRepository, User $user): Response
+    public function new(Request $request, CandidacyRepository $candidacyRepository): Response
     {
         $candidacy = new Candidacy();
+        $now = new \DateTimeImmutable('now');
         $form = $this->createForm(CandidacyType::class, $candidacy);
         $form->handleRequest($request);
-        $userId = $user->getId();
+        $user = $this->getUser()->getId();
         if ($form->isSubmitted() && $form->isValid()) {
+            $candidacy->setUserId($this->getUser());
+            $candidacy->setCreatedAt($now);
+            $candidacy->setGonnaApply(0);
+            $candidacy->setApply(0);
+            $candidacy->setCalled(0);
+            $candidacy->setInterview(0);
             $candidacyRepository->save($candidacy, true);
 
-            return $this->redirectToRoute('app_candidacy_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_show', ['id' => $user], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('candidacy/new.html.twig', [
             'candidacy' => $candidacy,
             'form' => $form,
-            'userId' => $userId,
         ]);
     }
 
@@ -52,11 +57,11 @@ class CandidacyController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_candidacy_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Candidacy $candidacy, CandidacyRepository $candidacyRepository, User $user): Response
+    public function edit(Request $request, Candidacy $candidacy, CandidacyRepository $candidacyRepository): Response
     {
         $form = $this->createForm(CandidacyType::class, $candidacy);
         $form->handleRequest($request);
-        $user= $this->getUser()->getId();
+        $user = $this->getUser()->getId();
         if ($form->isSubmitted() && $form->isValid()) {
             $candidacyRepository->save($candidacy, true);
             return $this->redirectToRoute('app_user_show', ['id' => $user], Response::HTTP_SEE_OTHER);
@@ -70,10 +75,11 @@ class CandidacyController extends AbstractController
     #[Route('/{id}', name: 'app_candidacy_delete', methods: ['POST'])]
     public function delete(Request $request, Candidacy $candidacy, CandidacyRepository $candidacyRepository): Response
     {
+        $user = $this->getUser()->getId();
         if ($this->isCsrfTokenValid('delete'.$candidacy->getId(), $request->request->get('_token'))) {
             $candidacyRepository->remove($candidacy, true);
         }
 
-        return $this->redirectToRoute('app_candidacy_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_user_show', ['id' => $user], Response::HTTP_SEE_OTHER);
     }
 }
