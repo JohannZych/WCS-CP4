@@ -18,6 +18,10 @@ class CandidacyFixtures extends Fixture
             $candidacy->setNameEntreprise($faker->company());
             $candidacy->setCreatedAt(new DateTimeImmutable('now'));
             $candidacy->setContent($faker->sentence());
+            $candidacy->setGonnaApply('false');
+            $candidacy->setApply('false');
+            $candidacy->setCalled('false');
+            $candidacy->setInterview('false');
             $manager->persist($candidacy);
         }
         $manager->flush();

@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Candidacy index{% endblock %}
+
+{% block body %}
+    <h1>Candidacy index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>NameEntreprise</th>
+                <th>CreatedAt</th>
+                <th>Content</th>
+                <th>GonnaApply</th>
+                <th>Apply</th>
+                <th>Called</th>
+                <th>Interview</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for candidacy in candidacies %}
+            <tr>
+                <td>{{ candidacy.id }}</td>
+                <td>{{ candidacy.nameEntreprise }}</td>
+                <td>{{ candidacy.createdAt ? candidacy.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ candidacy.content }}</td>
+                <td>{{ candidacy.gonnaApply ? 'Yes' : 'No' }}</td>
+                <td>{{ candidacy.apply ? 'Yes' : 'No' }}</td>
+                <td>{{ candidacy.called ? 'Yes' : 'No' }}</td>
+                <td>{{ candidacy.interview ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('app_candidacy_show', {'id': candidacy.id}) }}">show</a>
+                    <a href="{{ path('app_candidacy_edit', {'id': candidacy.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_candidacy_new') }}">Create new</a>
+{% endblock %}

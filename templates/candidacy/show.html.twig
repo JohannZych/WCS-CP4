@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Candidacy{% endblock %}
+
+{% block body %}
+    <h1>Candidacy</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ candidacy.id }}</td>
+            </tr>
+            <tr>
+                <th>NameEntreprise</th>
+                <td>{{ candidacy.nameEntreprise }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ candidacy.createdAt ? candidacy.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Content</th>
+                <td>{{ candidacy.content }}</td>
+            </tr>
+            <tr>
+                <th>GonnaApply</th>
+                <td>{{ candidacy.gonnaApply ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Apply</th>
+                <td>{{ candidacy.apply ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Called</th>
+                <td>{{ candidacy.called ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Interview</th>
+                <td>{{ candidacy.interview ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_candidacy_index') }}">back to list</a>
+
+    <a href="{{ path('app_candidacy_edit', {'id': candidacy.id}) }}">edit</a>
+
+    {{ include('candidacy/_delete_form.html.twig') }}
+{% endblock %}
