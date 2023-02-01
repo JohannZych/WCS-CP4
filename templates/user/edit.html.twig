@@ -1,13 +1,28 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit User{% endblock %}
+{% block title %}Edition Utilisateur{% endblock %}
 
 {% block body %}
-    <h1>Edit User</h1>
+    <section class="page-section">
+        <p></p>
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-xl-7">
+                <div class="container">
+                    <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Je modifie mon
+                        Profil</h2>
+                    <!-- Icon Divider-->
+                    <div class="divider-custom">
+                        <div class="divider-custom-line"></div>
+                        <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                        <div class="divider-custom-line"></div>
+                    </div>
+                    <div class="form-control bg-secondary text-white">
 
-    {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
+                        {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <a href="{{ path('app_user_index') }}">back to list</a>
-
-    {{ include('user/_delete_form.html.twig') }}
 {% endblock %}
