@@ -1,0 +1,80 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User{% endblock %}
+
+{% block body %}
+
+    <!-- Masthead-->
+    <header class="masthead bg-primary text-white text-center">
+        <div class="container d-flex align-items-center flex-column">
+            <!-- Masthead Avatar Image-->
+            <img class="masthead-avatar mb-5" src="{{ asset('assets/img/avataaars.svg') }}" alt="..."/>
+            <!-- Masthead Heading-->
+            <h1 class="masthead-heading text-uppercase mb-0">{{ app.user.firstName }} {{ app.user.lastName }}</h1>
+            <!-- Icon Divider-->
+            <div class="divider-custom divider-light">
+                <div class="divider-custom-line"></div>
+                <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                <div class="divider-custom-line"></div>
+            </div>
+            <!-- Masthead Subheading-->
+            <p class="masthead-subheading font-weight-light mb-0">{{ app.user.city }} / {{ app.user.wantedJob }}</p>
+        </div>
+    </header>
+    <section class="page-section portfolio" id="portfolio">
+        <div class="container">
+            <!-- Portfolio Section Heading-->
+            <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Mes Candidatures</h2>
+            <!-- Icon Divider-->
+            <div class="divider-custom">
+                <div class="divider-custom-line"></div>
+                <h3>
+                    <a class="text-center text-uppercase text-secondary nav-link py-3 px-0 px-lg-3 rounded"
+                       href="{{ path('app_candidacy_new') }}">Ajouter une candidature</a>
+                </h3>
+                <div class="divider-custom-line"></div>
+            </div>
+            <!-- Portfolio Grid Items-->
+
+            <div class="row justify-content-center ">
+                {% for candidacy in candidacies %}
+                        <!-- Portfolio Item 1-->
+                        <div class="col-md-6 col-lg-4 mb-5 bg-info"
+                             style="border-radius: 5px; margin: 5px">
+                            <a href="{{ path('app_candidacy_edit' ,  {'id': candidacy.id}) }}" style=" text-decoration: none; color: black">
+                            <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal1"
+                                 style="padding: 10px">
+                                Entreprise : {{ candidacy.nameEntreprise }}<br>
+                                Commentaires : {{ candidacy.content }}<br>
+                                <div style="text-align: end; font-style: oblique">Créé le {{ candidacy.createdAt|date ('d-m-Y') }}</div>
+                                <div class="divider-custom">
+                                    <div class="divider-custom-line"></div>
+                                    <div class="divider-custom-icon"><i class="fas fa-archive"></i></div>
+                                    <div class="divider-custom-line"></div>
+                                </div>
+                                <table>
+                                    <tr>
+                                        <th class="text-center">Je vais postuler</th>
+                                        <th class="text-center">J'ai postulé</th>
+                                        <th class="text-center">J'ai eu un appel</th>
+                                        <th class="text-center">J'ai eu un entretien</th>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">{% if candidacy.gonnaApply %} &#10003;{% endif %}</td>
+                                        <td class="text-center">{% if candidacy.apply %} &#10003;{% endif %}</td>
+                                        <td class="text-center">{% if candidacy.called %} &#10003;{% endif %}</td>
+                                        <td class="text-center">{% if candidacy.interview %} &#10003;{% endif %}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            </a>
+                        </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
+
+    {#    {{ include('user/_delete_form.html.twig') }} #}
+{% endblock %}

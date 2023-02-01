@@ -5,9 +5,6 @@
     <title>{% block title %}Bienvenue !{% endblock %}</title>
     <link rel="icon"
           href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-    <!-- Font Awesome icons (free version)-->
-    <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
-    <!-- Google fonts-->
 
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
@@ -20,6 +17,7 @@
 
     {% block javascripts %}
         {{ encore_entry_script_tags('app') }}
+        <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     {% endblock %}
 </head>
 <body><!-- Navigation-->
@@ -33,12 +31,21 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{ path('app_login') }}">Se connecter</a>
-                </li>
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="{{path('app_register')}}">S'inscrire</a>
-                </li>
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
-                                                     href="#contact">Contact</a></li>
+                {% if app.user %}
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
+                                                         href="{{ path('app_user_show', {'id': app.user.id}) }}">Mon tableau de bord</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
+                                                         href="{{ path('app_logout') }}">Logout</a></li>
+                {% else %}
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
+                                                         href="{{ path('app_login') }}">Se connecter</a>
+                    </li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
+                                                         href="{{ path('app_register') }}">S'inscrire</a>
+                    </li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
+                                                         href="#contact">Contact</a></li>
+                {% endif %}
             </ul>
         </div>
     </div>
