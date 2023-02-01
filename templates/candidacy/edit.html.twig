@@ -1,13 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Candidacy{% endblock %}
+{% block title %}Edition Candidature{% endblock %}
 
 {% block body %}
-    <h1>Edit Candidacy</h1>
+    <section class="page-section">
+        <p></p>
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-xl-7">
+                <div class="container">
+                    <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Je modifie une
+                        Candidature</h2>
+                    <!-- Icon Divider-->
+                    <div class="divider-custom">
+                        <div class="divider-custom-line"></div>
+                        <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                        <div class="divider-custom-line"></div>
+                    </div>
+                    <div class="form-control bg-secondary text-white">
+                        {{ include('candidacy/_form.html.twig', {'button_label': 'Valider'}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    {{ include('candidacy/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_candidacy_index') }}">back to list</a>
-
-    {{ include('candidacy/_delete_form.html.twig') }}
 {% endblock %}

@@ -6,6 +6,7 @@ use App\Entity\Candidacy;
 use App\Entity\User;
 use App\Form\CandidacyType;
 use App\Repository\CandidacyRepository;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -51,14 +52,14 @@ class CandidacyController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_candidacy_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Candidacy $candidacy, CandidacyRepository $candidacyRepository): Response
+    public function edit(Request $request, Candidacy $candidacy, CandidacyRepository $candidacyRepository, User $user): Response
     {
         $form = $this->createForm(CandidacyType::class, $candidacy);
         $form->handleRequest($request);
+        $user= $this->getUser()->getId();
         if ($form->isSubmitted() && $form->isValid()) {
             $candidacyRepository->save($candidacy, true);
-
-            return $this->redirectToRoute('app_candidacy_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_user_show', ['id' => $user], Response::HTTP_SEE_OTHER);
         }
         return $this->renderForm('candidacy/edit.html.twig', [
             'candidacy' => $candidacy,
