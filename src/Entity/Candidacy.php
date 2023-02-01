@@ -35,6 +35,9 @@ class Candidacy
     #[ORM\Column(nullable: true)]
     private ?bool $interview = null;
 
+    #[ORM\ManyToOne(inversedBy: 'candidacies')]
+    private ?User $userId = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -120,6 +123,18 @@ class Candidacy
     public function setInterview(?bool $interview): self
     {
         $this->interview = $interview;
+
+        return $this;
+    }
+
+    public function getUserId(): ?User
+    {
+        return $this->userId;
+    }
+
+    public function setUserId(?User $userId): self
+    {
+        $this->userId = $userId;
 
         return $this;
     }
