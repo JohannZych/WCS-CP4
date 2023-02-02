@@ -44,7 +44,7 @@ class UserController extends AbstractController
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
     public function show(User $user, CandidacyRepository $candidacyRepository): Response
     {
-        $candidacy = $candidacyRepository->findBy(['userId' => $user->getId()]);
+        $candidacy = $candidacyRepository->findBy(['userId' => $user->getId()], [ 'createdAt'=> 'DESC']);
         return $this->render('user/show.html.twig', [
             'user' => $user,
             'candidacies' => $candidacy,
