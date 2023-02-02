@@ -39,6 +39,8 @@
                                                          href="{{ path('app_user_show', {'id': app.user.id}) }}">Mon
                             tableau de bord</a></li>
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
+                                                         href="{{ path('app_jobs_index') }}">Emplois</a></li>
+                    <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
                                                          href="{{ path('app_logout') }}">Logout</a></li>
                 {% else %}
                     <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded"
@@ -53,16 +55,14 @@
             </ul>
         </div>
     </div>
-{#    TODO Voir flash messages#}
-{#    {% if messages is defined %}#}
-{#        {% for message in messages %}#}
-{#            <div class="alert">#}
-{#                {{ message }}#}
-{#            </div>#}
-{#        {% endfor %}#}
-{#    {% endif %}#}
 </nav>
-
+{% for message in app.flashes('success') %}
+    <div class="bg-primary">
+        <div class="alert alert-success mb-0 mt-0" style="position: absolute; top: 110px; left: 40vw; width: 400px">
+            {{ message }}
+        </div>
+    </div>
+{% endfor %}
 {% block body %}{% endblock %}
 </body>
 </html>

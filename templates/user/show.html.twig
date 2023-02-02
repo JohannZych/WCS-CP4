@@ -41,9 +41,18 @@
             <!-- Portfolio Grid Items-->
 
             <div class="row justify-content-center ">
+                {% set cardNumber = 0 %}
                 {% for candidacy in candidacies %}
+                    {% if delai[cardNumber] < 15 %}
+                        {% set bgCard = "bg-primary" %}
+                    {% elseif delai[cardNumber] < 30 %}
+                        {% set bgCard = "bg-warning" %}
+                    {% else %}
+                        {% set bgCard = "bg-danger" %}
+                    {% endif %}
+
                     <!-- Portfolio Item 1-->
-                    <div class="col-md-6 col-lg-4 mb-5 bg-primary"
+                    <div class="col-md-6 col-lg-4 mb-5 {{ bgCard }}"
                          style="border-radius: 5px; margin: 5px">
                         <a href="{{ path('app_candidacy_edit' ,  {'id': candidacy.id}) }}"
                            style=" text-decoration: none; color: black">
@@ -78,6 +87,7 @@
                             </table>
                         </div>
                     </div>
+                    {% set cardNumber = cardNumber + 1 %}
                 {% endfor %}
             </div>
         </div>

@@ -58,7 +58,7 @@ class JobsController extends AbstractController
         $candidacy->setCalled(0);
         $candidacy->setInterview(0);
         $candidacyRepository->save($candidacy, true);
-        $this->addFlash('success', 'Success:  Candidature Ajoutée');
+        $this->addFlash('success', 'Success:  Offre d\'emploi ajoutée');
         return $this->redirectToRoute('app_user_show', ['id' => $this->getUser()] , Response::HTTP_SEE_OTHER);
     }
 }
