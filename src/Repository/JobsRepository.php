@@ -49,6 +49,7 @@ class JobsRepository extends ServiceEntityRepository
             ->orWhere('j.city LIKE :search')
             ->orWhere('j.content LIKE :search')
             ->orWhere('j.entreprise LIKE :search')
+            ->orWhere('j.typeJob LIKE :search')
             ->setParameter('search', '%' . $search . '%')
             ->orderBy('j.id', 'ASC')
 //            ->setMaxResults(10)

@@ -35,7 +35,7 @@ class CandidacyController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $candidacy->setUserId($this->getUser());
             $candidacy->setCreatedAt($now);
-            $candidacy->setGonnaApply(0);
+            $candidacy->setGonnaApply(1 );
             $candidacy->setApply(0);
             $candidacy->setCalled(0);
             $candidacy->setInterview(0);
