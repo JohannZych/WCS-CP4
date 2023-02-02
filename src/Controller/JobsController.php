@@ -2,9 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Candidacy;
 use App\Entity\Jobs;
-use App\Form\JobsType;
 use App\Form\SearchContentType;
+use App\Repository\CandidacyRepository;
 use App\Repository\JobsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,5 +39,26 @@ class JobsController extends AbstractController
         return $this->render('jobs/show.html.twig', [
             'job' => $job,
         ]);
+    }
+
+    #[Route('{id}/new_job', name: 'app_candidacy_new_job', methods: ['GET', 'POST'])]
+
+    public function newJob(CandidacyRepository $candidacyRepository, Jobs $jobs): Response
+    {
+        $candidacy = new Candidacy();
+        $now = new \DateTimeImmutable('now');
+//        $user = $this->getUser()->getId();
+        $candidacy->setUserId($this->getUser());
+        $candidacy->setCreatedAt($now);
+        $candidacy->setContent($jobs->getContent());
+        $candidacy->setNameEntreprise($jobs->getEntreprise());
+        $candidacy->setUrl($jobs->getUrl());
+        $candidacy->setGonnaApply(0);
+        $candidacy->setApply(0);
+        $candidacy->setCalled(0);
+        $candidacy->setInterview(0);
+        $candidacyRepository->save($candidacy, true);
+        $this->addFlash('success', 'Success:  Candidature Ajoutée');
+        return $this->redirectToRoute('app_user_show', ['id' => $this->getUser()] , Response::HTTP_SEE_OTHER);
     }
 }

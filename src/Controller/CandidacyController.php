@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Candidacy;
+use App\Entity\Jobs;
 use App\Entity\User;
 use App\Form\CandidacyType;
 use App\Repository\CandidacyRepository;
+use App\Repository\JobsRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,7 +40,7 @@ class CandidacyController extends AbstractController
             $candidacy->setCalled(0);
             $candidacy->setInterview(0);
             $candidacyRepository->save($candidacy, true);
-
+            $this->addFlash('success', 'Success:  Candidature Ajoutée');
             return $this->redirectToRoute('app_user_show', ['id' => $user], Response::HTTP_SEE_OTHER);
         }
 
@@ -76,7 +78,7 @@ class CandidacyController extends AbstractController
     public function delete(Request $request, Candidacy $candidacy, CandidacyRepository $candidacyRepository): Response
     {
         $user = $this->getUser()->getId();
-        if ($this->isCsrfTokenValid('delete'.$candidacy->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $candidacy->getId(), $request->request->get('_token'))) {
             $candidacyRepository->remove($candidacy, true);
         }
 
