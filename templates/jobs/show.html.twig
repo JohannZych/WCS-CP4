@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détail Offre d'emploi{% endblock %}
+
+{% block body %}
+    <section class="page-section">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-xl-7">
+                <div class="container">
+                    <p></p>
+                    <h3 class="text-center text-uppercase text-secondary mb-0">Détail de l'offre</h3>
+
+
+                    <table class="table">
+                        <tbody>
+                        <tr>
+                            <th>Intitulé</th>
+                            <td>{{ job.title }}</td>
+                        </tr>
+                        <tr>
+                            <th>Commentaires</th>
+                            <td>{{ job.content }}</td>
+                        </tr>
+                        <tr>
+                            <th>Type de contrat</th>
+                            <td>{{ job.typeJob }}</td>
+                        </tr>
+                        <tr>
+                            <th>Entreprise</th>
+                            <td>{{ job.entreprise }}</td>
+                        </tr>
+                        <tr>
+                            <th>Postée le</th>
+                            <td>{{ job.createdAt ? job.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                        </tr>
+                        <tr>
+                            <th>Lien vers annonce</th>
+                            <td><a href="{{ job.url }}" target="_blank">{{ job.url }}</a></td>
+                        </tr>
+                        <tr>
+                            <th>Ville</th>
+                            <td>{{ job.city }}</td>
+                        </tr>
+                        <tr>
+                            <th>Ajouter à mon tableau de bord</th>
+                            <td>
+                                <a href="{{ path('app_candidacy_new') }}" class="btn btn-primary btn-sm"><i
+                                            class="fas fa-plus"></i></a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <a href="{{ path('app_jobs_index') }}" class="btn btn-primary btn-sm">Retour à la recherche</a>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
