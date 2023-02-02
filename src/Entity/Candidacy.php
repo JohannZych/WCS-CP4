@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CandidacyRepository;
+use DateTime;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -152,5 +153,12 @@ class Candidacy
         $this->url = $url;
 
         return $this;
+    }
+
+    public function getDelai($date)
+    {
+        $now = new DateTime('now');
+        $interval =  ($now->getTimestamp()) - ($date->getTimestamp());
+        return round($interval / 86400);
     }
 }

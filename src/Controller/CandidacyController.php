@@ -64,7 +64,10 @@ class CandidacyController extends AbstractController
         $form = $this->createForm(CandidacyType::class, $candidacy);
         $form->handleRequest($request);
         $user = $this->getUser()->getId();
+        $now = new \DateTimeImmutable('now');
+
         if ($form->isSubmitted() && $form->isValid()) {
+            $candidacy->setCreatedAt($now);
             $candidacyRepository->save($candidacy, true);
             return $this->redirectToRoute('app_user_show', ['id' => $user], Response::HTTP_SEE_OTHER);
         }

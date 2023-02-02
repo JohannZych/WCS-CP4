@@ -6,6 +6,7 @@ use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\CandidacyRepository;
 use App\Repository\UserRepository;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -44,10 +45,16 @@ class UserController extends AbstractController
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
     public function show(User $user, CandidacyRepository $candidacyRepository): Response
     {
-        $candidacy = $candidacyRepository->findBy(['userId' => $user->getId()], [ 'createdAt'=> 'DESC']);
+        $delai[]= null;
+        $candidacies = $candidacyRepository->findBy(['userId' => $user->getId()], [ 'createdAt'=> 'DESC']);
+        foreach ( $candidacies as $candidacy){
+            $delai[] = $candidacy->getDelai($candidacy->getCreatedAt());
+        }
         return $this->render('user/show.html.twig', [
             'user' => $user,
-            'candidacies' => $candidacy,
+            'candidacies' => $candidacies,
+            'delai' => $delai,
+
         ]);
     }
 
