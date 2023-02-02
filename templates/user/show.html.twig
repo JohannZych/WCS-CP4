@@ -33,13 +33,30 @@
             <div class="divider-custom">
                 <div class="divider-custom-line"></div>
                 <h3>
-                    <a class="text-center text-uppercase text-secondary nav-link py-3 px-0 px-lg-3 rounded"
+                    <a class="text-center text-uppercase text-secondary nav-link py-3 px-0 px-lg-3 rounded mt-3"
                        href="{{ path('app_candidacy_new',  {'id': app.user.id}) }}">Ajouter une candidature</a>
                 </h3>
                 <div class="divider-custom-line"></div>
             </div>
             <!-- Portfolio Grid Items-->
-
+            {% set cardNumber = 0 %}
+            {% set cardDanger = 0 %}
+            {% set cardWarning = 0 %}
+            {% for candidacy in candidacies %}
+                {% if delai[cardNumber] < 15 %}
+                {% elseif delai[cardNumber] < 30 %}
+                    {% set cardWarning = cardWarning +1 %}
+                {% else %}
+                    {% set cardDanger = cardDanger +1 %}
+                {% endif %}
+                {% set cardNumber = cardNumber + 1 %}
+            {% endfor %}
+            <div class="divider-custom">
+                <div class="divider-custom-line"></div>
+                <div class="divider-custom-icon text-danger"><i class="fas fa-bell fs-3"></i>&nbsp:&nbsp{{ cardDanger }}&nbsp</div>
+                <div class="divider-custom-icon text-warning"><i class="fas fa-bell fs-3"></i>&nbsp:&nbsp{{ cardWarning }}</div>
+                <div class="divider-custom-line"></div>
+            </div>
             <div class="row justify-content-center ">
                 {% set cardNumber = 0 %}
                 {% for candidacy in candidacies %}
@@ -50,7 +67,6 @@
                     {% else %}
                         {% set bgCard = "bg-danger" %}
                     {% endif %}
-
                     <!-- Portfolio Item 1-->
                     <div class="col-md-6 col-lg-4 mb-5 {{ bgCard }}"
                          style="border-radius: 5px; margin: 5px">
