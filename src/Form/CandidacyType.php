@@ -19,6 +19,8 @@ class CandidacyType extends AbstractType
             ])
             ->add('content', TextareaType::class, ['label' => 'Commentaires :'
             ])
+            ->add('url', TextType::class, ['label' => 'Url :'
+            ])
             ->add('gonnaApply', CheckboxType::class, ['label' => 'Je vais postuler', 'required' => false
             ])
             ->add('apply', CheckboxType::class, ['label' => 'J\'ai postulé', 'required' => false

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}User{% endblock %}
+{% block title %}Mon Tableau de Bord{% endblock %}
 
 {% block body %}
 
@@ -12,7 +12,8 @@
             <img class="masthead-avatar mb-5" src="{{ asset('assets/img/avataaars.svg') }}" alt="..."/>
             <!-- Masthead Heading-->
             <h1 class="masthead-heading text-uppercase mb-0">{{ app.user.firstName }} {{ app.user.lastName }}
-                <a href="{{ path('app_user_edit',  {'id': app.user.id}) }}" class="text-secondary"><i class="fas fa-edit fs-6"></i></a>
+                <a href="{{ path('app_user_edit',  {'id': app.user.id}) }}" class="text-secondary"><i
+                            class="fas fa-edit fs-6"></i></a>
             </h1>
             <!-- Icon Divider-->
             <div class="divider-custom divider-light">
@@ -41,43 +42,44 @@
 
             <div class="row justify-content-center ">
                 {% for candidacy in candidacies %}
-                        <!-- Portfolio Item 1-->
-                        <div class="col-md-6 col-lg-4 mb-5 bg-info"
-                             style="border-radius: 5px; margin: 5px">
-                            <a href="{{ path('app_candidacy_edit' ,  {'id': candidacy.id}) }}" style=" text-decoration: none; color: black">
-                            <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal1"
-                                 style="padding: 10px">
-                                Entreprise : {{ candidacy.nameEntreprise }}<br>
-                                Commentaires : {{ candidacy.content }}<br>
-                                <div style="text-align: end; font-style: oblique">Créé le {{ candidacy.createdAt|date("d-m-Y") }}</div>
-                                <div class="divider-custom">
-                                    <div class="divider-custom-line"></div>
-                                    <div class="divider-custom-icon"><i class="fas fa-archive"></i></div>
-                                    <div class="divider-custom-line"></div>
-                                </div>
-                                <table>
-                                    <tr>
-                                        <th class="text-center">Je vais postuler</th>
-                                        <th class="text-center">J'ai postulé</th>
-                                        <th class="text-center">J'ai eu un appel</th>
-                                        <th class="text-center">J'ai eu un entretien</th>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">{% if candidacy.gonnaApply %} &#10003;{% endif %}</td>
-                                        <td class="text-center">{% if candidacy.apply %} &#10003;{% endif %}</td>
-                                        <td class="text-center">{% if candidacy.called %} &#10003;{% endif %}</td>
-                                        <td class="text-center">{% if candidacy.interview %} &#10003;{% endif %}</td>
-                                    </tr>
-                                </table>
+                    <!-- Portfolio Item 1-->
+                    <div class="col-md-6 col-lg-4 mb-5 bg-info"
+                         style="border-radius: 5px; margin: 5px">
+                        <a href="{{ path('app_candidacy_edit' ,  {'id': candidacy.id}) }}"
+                           style=" text-decoration: none; color: black">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal1"
+                             style="padding: 10px">
+                            Entreprise : {{ candidacy.nameEntreprise }}<br>
+                            Commentaires : {{ candidacy.content }}<br>
+                            <a href="{{ candidacy.url }}" target="_blank" style="text-decoration: none; color: white">Accès
+                                à l'annonce </a>
+                            <div style="text-align: end; font-style: oblique">Créé
+                                le {{ candidacy.createdAt|date("d-m-Y") }}</div>
+                            <div class="divider-custom">
+                                <div class="divider-custom-line"></div>
+                                <div class="divider-custom-icon"><i class="fas fa-archive"></i></div>
+                                <div class="divider-custom-line"></div>
                             </div>
-                            </a>
+                            <table>
+                                <tr>
+                                    <th class="text-center">Je vais postuler</th>
+                                    <th class="text-center">J'ai postulé</th>
+                                    <th class="text-center">J'ai eu un appel</th>
+                                    <th class="text-center">J'ai eu un entretien</th>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">{% if candidacy.gonnaApply %} &#10003;{% endif %}</td>
+                                    <td class="text-center">{% if candidacy.apply %} &#10003;{% endif %}</td>
+                                    <td class="text-center">{% if candidacy.called %} &#10003;{% endif %}</td>
+                                    <td class="text-center">{% if candidacy.interview %} &#10003;{% endif %}</td>
+                                </tr>
+                            </table>
                         </div>
+                    </div>
                 {% endfor %}
             </div>
         </div>
     </section>
-
-    <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
-
-    {#    {{ include('user/_delete_form.html.twig') }} #}
 {% endblock %}

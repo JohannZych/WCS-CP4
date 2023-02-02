@@ -38,6 +38,9 @@ class Candidacy
     #[ORM\ManyToOne(inversedBy: 'candidacies')]
     private ?User $userId = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $url = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -135,6 +138,18 @@ class Candidacy
     public function setUserId(?User $userId): self
     {
         $this->userId = $userId;
+
+        return $this;
+    }
+
+    public function getUrl(): ?string
+    {
+        return $this->url;
+    }
+
+    public function setUrl(?string $url): self
+    {
+        $this->url = $url;
 
         return $this;
     }

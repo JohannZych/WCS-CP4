@@ -22,6 +22,7 @@ class CandidacyFixtures extends Fixture
             $candidacy->setApply('false');
             $candidacy->setCalled('false');
             $candidacy->setInterview('false');
+            $candidacy->setUrl($faker->url());
             $manager->persist($candidacy);
         }
         $manager->flush();
