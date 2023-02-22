@@ -1,0 +1,111 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Tableau de Bord{% endblock %}
+
+{% block body %}
+
+    <!-- Masthead-->
+    <header class="masthead bg-primary text-white text-center">
+        <div class="container d-flex align-items-center flex-column">
+            <!-- Masthead Avatar Image-->
+
+            <img class="masthead-avatar mb-5" src="{{ asset('assets/img/avataaars.svg') }}" alt="..."/>
+            <!-- Masthead Heading-->
+            <h1 class="masthead-heading text-uppercase mb-0">{{ app.user.firstName }} {{ app.user.lastName }}
+                <a href="{{ path('app_user_edit',  {'id': app.user.id}) }}" class="text-secondary"><i
+                            class="fas fa-edit fs-6"></i></a>
+            </h1>
+            <!-- Icon Divider-->
+            <div class="divider-custom divider-light">
+                <div class="divider-custom-line"></div>
+                <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                <div class="divider-custom-line"></div>
+            </div>
+            <!-- Masthead Subheading-->
+            <p class="masthead-subheading font-weight-light mb-0">{{ app.user.city }} / {{ app.user.wantedJob }}</p>
+        </div>
+    </header>
+    <section class="page-section portfolio" id="portfolio">
+        <div class="container">
+            <!-- Portfolio Section Heading-->
+            <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Mes Candidatures</h2>
+            <!-- Icon Divider-->
+            <div class="divider-custom">
+                <div class="divider-custom-line"></div>
+                <h3>
+                    <a class="text-center text-uppercase text-secondary nav-link py-3 px-0 px-lg-3 rounded mt-3"
+                       href="{{ path('app_candidacy_new',  {'id': app.user.id}) }}">Ajouter une candidature</a>
+                </h3>
+                <div class="divider-custom-line"></div>
+            </div>
+            <!-- Portfolio Grid Items-->
+            {% set cardNumber = 0 %}
+            {% set cardDanger = 0 %}
+            {% set cardWarning = 0 %}
+            {% for candidacy in candidacies %}
+                {% if delai[cardNumber] < 15 %}
+                {% elseif delai[cardNumber] < 30 %}
+                    {% set cardWarning = cardWarning +1 %}
+                {% else %}
+                    {% set cardDanger = cardDanger +1 %}
+                {% endif %}
+                {% set cardNumber = cardNumber + 1 %}
+            {% endfor %}
+            <div class="divider-custom">
+                <div class="divider-custom-line"></div>
+                <div class="divider-custom-icon text-danger"><i class="fas fa-bell fs-3"></i>&nbsp:&nbsp{{ cardDanger }}&nbsp</div>
+                <div class="divider-custom-icon text-warning"><i class="fas fa-bell fs-3"></i>&nbsp:&nbsp{{ cardWarning }}</div>
+                <div class="divider-custom-line"></div>
+            </div>
+            <div class="row justify-content-center ">
+                {% set cardNumber = 0 %}
+                {% for candidacy in candidacies %}
+                    {% if delai[cardNumber] < 15 %}
+                        {% set bgCard = "bg-primary" %}
+                    {% elseif delai[cardNumber] < 30 %}
+                        {% set bgCard = "bg-warning" %}
+                    {% else %}
+                        {% set bgCard = "bg-danger" %}
+                    {% endif %}
+                    <!-- Portfolio Item 1-->
+                    <div class="col-md-6 col-lg-4 mb-5 {{ bgCard }}"
+                         style="border-radius: 5px; margin: 5px">
+                        <a href="{{ path('app_candidacy_edit' ,  {'id': candidacy.id}) }}"
+                           style=" text-decoration: none; color: black">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal1"
+                             style="padding: 10px">
+                            Entreprise : {{ candidacy.nameEntreprise }}<br>
+                            Commentaires : {{ candidacy.content }}<br>
+                            <a href="{{ candidacy.url }}" target="_blank" style="text-decoration: none; color: white">Accès
+                                à l'annonce </a>
+                            <div style="text-align: end; font-style: oblique">Créé
+                                le {{ candidacy.createdAt|date("d-m-Y") }}</div>
+                            <div class="divider-custom">
+                                <div class="divider-custom-line"></div>
+                                <div class="divider-custom-icon"><i class="fas fa-archive"></i></div>
+                                <div class="divider-custom-line"></div>
+                            </div>
+                            <table>
+                                <tr>
+                                    <th class="text-center">Je vais postuler</th>
+                                    <th class="text-center">J'ai postulé</th>
+                                    <th class="text-center">J'ai eu un appel</th>
+                                    <th class="text-center">J'ai eu un entretien</th>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">{% if candidacy.gonnaApply %} &#10003;{% endif %}</td>
+                                    <td class="text-center">{% if candidacy.apply %} &#10003;{% endif %}</td>
+                                    <td class="text-center">{% if candidacy.called %} &#10003;{% endif %}</td>
+                                    <td class="text-center">{% if candidacy.interview %} &#10003;{% endif %}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    {% set cardNumber = cardNumber + 1 %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}
